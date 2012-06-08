@@ -1,4 +1,9 @@
-(function(global){
+/*!
+ * gesso.js - A simple wrapper for html canvas streamlining.
+ * (c) 2012 Russell Munson
+ * http://github.com/fallenice/gesso.js
+ */ 
+ (function(global){
 	var i=0,
 		meth,
 		og=document.createElement('canvas').getContext('2d'),
@@ -16,7 +21,6 @@
 	for(meth in og){
 		interface[meth]=wrap(meth);
 	}
-
 
 	global.gesso=function(can){
 		var inst=Object.create(interface);

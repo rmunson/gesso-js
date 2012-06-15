@@ -1,7 +1,7 @@
 /*!
  * gesso.js - A simple wrapper for html canvas streamlining.
  * (c) 2012 Russell Munson
- * http://github.com/fallenice/gesso.js
+ * http://github.com/fallenice/gesso
  */ 
  (function(global){
 	var meth,

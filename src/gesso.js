@@ -4,28 +4,28 @@
  * http://github.com/fallenice/gesso.js
  */ 
  (function(global){
-	var i=0,
-		meth,
+	var meth,
 		og=document.createElement('canvas').getContext('2d'),
 		interface={},
-		wrap=function(meth){
-			return typeof og[meth]==="function" ? function(val){
-				this._ctx_[meth](val);
-				return this;
+		wrap=function(_meth){
+			return typeof og[_meth]==="function" ? function(val){
+					//Return value if available, or chain.
+				return this._ctx_[_meth].apply(this._ctx_,arguments) || this;
 			} : function(val){
-				this._ctx_[meth]=val;
+				this._ctx_[_meth]=val;
 				return this;
 			};
+		},
+		gesso = function(can){
+			this._ctx_=can && can.getContext && can.getContext('2d');
 		};
 
 	for(meth in og){
 		interface[meth]=wrap(meth);
 	}
-
+	gesso.prototype=interface;
 	global.gesso=function(can){
-		var inst=Object.create(interface);
-		inst._ctx_=can && can.getContext && can.getContext('2d');
-		return inst;
+		return new gesso(can);
 	};
 	og=null;
-})(this)
+})(this);

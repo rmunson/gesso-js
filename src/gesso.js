@@ -8,7 +8,7 @@
 		og=document.createElement('canvas').getContext('2d'),
 		interface={},
 		wrap=function(_meth){
-			return typeof og[_meth]==="function" ? function(val){
+			return typeof og[_meth]==="function" ? function(){
 					//Return value if available, or chain.
 				return this._ctx_[_meth].apply(this._ctx_,arguments) || this;
 			} : function(val){

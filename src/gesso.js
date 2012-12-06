@@ -61,7 +61,6 @@
  	 */
  	global.gesso=define(function(){
 		return function(can){
-			console.log(can);
 			return new gesso(can);
 		};
 	});

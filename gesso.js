@@ -1,8 +1,9 @@
 /*
  * gesso.js - A simple wrapper for html canvas streamlining.
  * (c) 2012 Russell Munson
- * http://github.com/fallenice/gesso
+ * http://github.com/rmunson/gesso
  */ 
+
  (function(global,define){
 
 	var meth,
@@ -55,7 +56,7 @@
 	gesso.prototype=interface;
 
  	/**
- 	 * Expose Gesso for CommonJS, AMD, or non-require environments.
+ 	 * Expose gesso for CommonJS, AMD, or non-require environments.
  	 * Use available define method or attach to exports if present. Otherwise
  	 * assign to window.gesso.
  	 * @param  {function} g Closure function to handle setup.

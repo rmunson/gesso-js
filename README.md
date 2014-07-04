@@ -5,7 +5,7 @@ Canvas and canvas context wrapper.  Supplies a chainable api of canvas methods, 
 ## Basic Usage
 
 ```
-	var gtx=new gesso(document.createElement('canvas'));
+	var gtx=gesso(document.createElement('canvas'));
 
 	gtx.beginPath()
 		.miterLimit(10)

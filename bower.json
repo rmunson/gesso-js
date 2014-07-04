@@ -1,0 +1,28 @@
+{
+  "name": "gesso",
+  "main": "gesso.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/rmunson/gesso",
+  "authors": [
+    "Russell Munson"
+  ],
+  "description": "Canvas and canvas context wrapper.  Supplies a chainable api of canvas methods, and command grouping.",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "canvas",
+    "chaining",
+    "javascript"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

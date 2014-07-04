@@ -6,7 +6,8 @@
  (function(global,define){
 
 	var meth,
-		og=this.document && document.createElement('canvas').getContext('2d'),
+		can=this.document && document.createElement('canvas'),
+		og=can && can.getContext && can.getContext('2d')||{},
 		interface={},
 
 	cap = function(str){
@@ -20,7 +21,7 @@
 	wrap=function(_meth){
 		return typeof og[_meth]==="function" ? function(){
 				//Return value if available, or chain.
-			return this._ctx_[_meth].apply(this._ctx_,arguments) || this;
+			return this._ctx_[_meth] && this._ctx_[_meth].apply(this._ctx_,arguments) || this;
 		} : function(val){
 			this._ctx_[_meth]=val;
 			return this;
@@ -41,7 +42,7 @@
 	},
 		
 	gesso = function(can){
-		this._ctx_=can && can.getContext && can.getContext('2d');
+		this._ctx_=can && can.getContext && can.getContext('2d')||{};
 	};
 
 	for(meth in og){
@@ -61,11 +62,12 @@
  	 */
  	global.gesso=define(function(){
 		return function(can){
+			//console.log(can);
 			return new gesso(can);
 		};
 	});
 	/* clear out garbage */
-	og=wrap=grouper=meth=null;
+	can=og=wrap=grouper=meth=null;
 })(this, this.require && this.define || function(g){
 	if(typeof module!=='undefined' && module.exports){
 		module.exports=g();

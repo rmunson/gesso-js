@@ -1,5 +1,5 @@
 /*
- * gesso.js - A simple wrapper for html canvas streamlining.
+ * gesso.js - "Canvas and canvas context wrapper.  Supplies a chainable api of canvas methods, and command grouping."
  * (c) 2012 Russell Munson
  * http://github.com/rmunson/gesso
  */ 
@@ -49,12 +49,8 @@
 		return og ? function(props){
 			return !props ? og.call(this) : run.call(this,props);
 		} : run
-	},
-		
-	gesso = function(can){
-		this._ctx_=can && can.getContext && can.getContext('2d')||{};
 	};
-
+		
 	for(meth in og){
 		proto[meth]=wrap(meth);
 	}
@@ -62,6 +58,22 @@
 	'shadow,line,text,fill,stroke'.split(',').forEach(function(group){
 		proto[group]=grouper(group);
 	});
+
+	proto.getContext = function(){
+		return this._ctx_;
+	};
+	proto.getCanvas = function(){
+		return this._ctx_.canvas;
+	};
+
+	function gesso( can ){
+		if(!(this instanceof gesso)){
+			return new gesso(can);
+		}
+		this._ctx_=can && can.getContext && can.getContext('2d')||{};
+	};
+
+
 	gesso.prototype=proto;
 
 	/* clear out garbage */
@@ -73,7 +85,5 @@
  	 * assign to window.gesso.
  	 * @param  {function} g Closure function to handle setup.
  	 */
- 	return function(can){
-		return new gesso(can);
-	};
+ 	return gesso;
 });

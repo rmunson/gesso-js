@@ -3,6 +3,7 @@
  * (c) 2012 Russell Munson
  * http://github.com/rmunson/gesso
  */ 
+
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -10,13 +11,14 @@
             return factory();
         });
     } else{
-    	factory();
+    	root.gesso=factory();
     }
-}(this,function(){
+})(this,function(){
+	'use strict'
 	var meth,
-		can=this.document && document.createElement('canvas'),
+		can=window.document && document.createElement('canvas'),
 		og=can && can.getContext && can.getContext('2d')||{},
-		interface={},
+		proto={},
 
 	cap = function(str){
 		return str.charAt(0).toUpperCase() + str.substr(1);
@@ -37,7 +39,7 @@
 	},
 		/* used in constructing api (free to clear) */
 	grouper = function(item){
-		var og=interface[item],
+		var og=proto[item],
 			run=function(props){
 				for(var key in props){
 					this[item+cap(key)] && this[item+cap(key)].apply(this,ensureArray(props[key]));
@@ -54,13 +56,16 @@
 	};
 
 	for(meth in og){
-		interface[meth]=wrap(meth);
+		proto[meth]=wrap(meth);
 	}
 
 	'shadow,line,text,fill,stroke'.split(',').forEach(function(group){
-		interface[group]=grouper(group);
+		proto[group]=grouper(group);
 	});
-	gesso.prototype=interface;
+	gesso.prototype=proto;
+
+	/* clear out garbage */
+	can=og=wrap=grouper=meth=null;
 
  	/**
  	 * Expose gesso for CommonJS, AMD, or non-require environments.
@@ -68,11 +73,7 @@
  	 * assign to window.gesso.
  	 * @param  {function} g Closure function to handle setup.
  	 */
- 	global.gesso=define(function(){
-		return function(can){
-			return new gesso(can);
-		};
-	});
-	/* clear out garbage */
-	can=og=wrap=grouper=meth=null;
+ 	return function(can){
+		return new gesso(can);
+	};
 });

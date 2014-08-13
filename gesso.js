@@ -3,9 +3,16 @@
  * (c) 2012 Russell Munson
  * http://github.com/rmunson/gesso
  */ 
-
- (function(global,define){
-
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(function () {
+            return factory();
+        });
+    } else{
+    	factory();
+    }
+}(this,function(){
 	var meth,
 		can=this.document && document.createElement('canvas'),
 		og=can && can.getContext && can.getContext('2d')||{},
@@ -63,16 +70,9 @@
  	 */
  	global.gesso=define(function(){
 		return function(can){
-			//console.log(can);
 			return new gesso(can);
 		};
 	});
 	/* clear out garbage */
 	can=og=wrap=grouper=meth=null;
-})(this, this.require && this.define || function(g){
-	if(typeof module!=='undefined' && module.exports){
-		module.exports=g();
-	} else{
-		return g();
-	}
 });

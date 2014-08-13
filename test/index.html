@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+	<title>gesso - Unit tests</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<link rel="stylesheet" type="text/css" href="../bower_components/mocha/mocha.css">
+	<style>
+		#mocha .test code, #mocha .test pre {
+			white-space:pre-line;
+		}
+	</style>
+	<script type="text/javascript" src="../bower_components/requirejs/require.js"></script>
+	<script type="text/javascript" src="../bower_components/mocha/mocha.js"></script>
+
+</head>
+<body>
+	<div id="mocha"></div>
+	<script type="text/javascript">
+		mocha.setup({
+			ui : 'bdd',
+			reporter : ['html'],
+			globals  : ['results']
+		});
+		mocha.checkLeaks();
+		require.config({
+			baseUrl : '../bower_components/'
+		});
+		require([
+			'chai/chai', 
+			'../gesso'  
+		],function( chai, gesso ){
+			var expect=chai.expect,
+				canvas = document.createElement('canvas');
+
+			describe("gesso",function(){
+				it("should exist",function(){
+					expect(gesso).to.exist;
+				})
+				it("should return an instance of gesso",function(){
+					expect(gesso(canvas)).to.be.an.instanceOf(gesso);
+					expect(new gesso(canvas)).to.be.an.instanceOf(gesso);
+				});
+				it("should return itself when calling context methods",function(){
+					var gtx=new gesso(canvas);
+					
+					expect(gtx.beginPath()).to.equal(gtx);
+				});
+
+				it("should return itself when calling context properties",function(){
+					var gtx=new gesso(canvas);
+					
+					expect(gtx.font("10px sans-serif")).to.equal(gtx);
+				});
+				it("should have the original context available as _ctx",function(){
+					var gtx=new gesso(canvas);
+					
+					expect(gtx._ctx_).to.equal(canvas.getContext('2d'));
+				});
+				it("should return the orignal context when calling .getContext()",function(){
+					var gtx=new gesso(canvas);
+					
+					expect(gtx.getContext()).to.equal(canvas.getContext('2d'));
+				});
+				it("should return the orignal canvas element when calling .getCanvas",function(){
+					var gtx=new gesso(canvas);
+					
+					expect(gtx.getCanvas()).to.equal(canvas);
+				});
+				it("should implement the entire context api and propeties)",function(){
+					var gtx=new gesso(canvas),
+						ctx=canvas.getContext('2d'),
+						key,
+						keys=[];
+					for(key in ctx){
+						keys.push(key);
+					}
+					expect(gesso.prototype).to.include.keys(keys);
+				});
+			});
+			mocha.run();
+		});			
+	</script>
+</body>
+</html>

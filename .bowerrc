@@ -1,9 +1,9 @@
 {
     "registry": {
-        "register": "https://bower.herokuapp.com",
-        "publish": "https://bower.herokuapp.com",
+        "register": "https://registry.bower.io",
+        "publish": "https://registry.bower.io",
         "search": [
-            "https://bower.herokuapp.com"
+            "https://registry.bower.io"
         ]
     }
 }

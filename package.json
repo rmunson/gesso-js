@@ -7,6 +7,9 @@
     "Russell Munson"
   ],
   "description": "Canvas and canvas context wrapper.  Supplies a chainable api of canvas methods, and command grouping.",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "moduleType": [
     "amd",
     "globals",
